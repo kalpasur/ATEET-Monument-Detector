@@ -1,1 +1,1 @@
-# ATEET-Monument-Detector
+# ATEET: Monuments Detector
