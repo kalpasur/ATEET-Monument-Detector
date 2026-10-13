@@ -111,59 +111,95 @@ ATEET-Monument-Detector/
 └── README.md
 ```
 
-## Model training and evaluation artifacts
+## Explore model training and validation results
 
-The repository includes visual diagnostics produced during model training and validation. These figures are useful for understanding the training run, but they should be interpreted together with the dataset split, evaluation command, model configuration, and the research paper.
+The `visual/` directory contains the figures saved by the model's training/evaluation workflow. Use the expandable galleries below to inspect the learning curves, dataset-label diagnostics, training samples, and **validation ground truth versus model predictions**.
 
-### Training curves and summary
+> **How to read these figures:** validation label images show the annotations supplied as ground truth; validation prediction images show what the model predicted for the corresponding validation batches. They are qualitative examples, not by themselves a complete measure of model accuracy.
 
-![YOLOv5 training results](visual/results.png)
+### At a glance
 
-### Precision–recall and confidence curves
-
-| Evaluation plot | What it helps inspect |
+| Open the artifact | What it shows |
 |---|---|
+| [Training results](visual/results.png) | Training/validation loss and metric curves recorded during the run |
+| [Label diagnostics](visual/labels.jpg) | Distribution and geometry of the dataset labels |
+| [Confusion matrix](visual/confusion_matrix.png) | Class-level error patterns from the evaluation run |
 | [Precision–recall curve](visual/PR_curve.png) | Precision/recall trade-off across confidence thresholds |
-| [F1 curve](visual/F1_curve.png) | F1-score behaviour as the confidence threshold changes |
-| [Precision curve](visual/P_curve.png) | Precision behaviour across confidence thresholds |
-| [Recall curve](visual/R_curve.png) | Recall behaviour across confidence thresholds |
-| [Confusion matrix](visual/confusion_matrix.png) | Class-level true/false prediction patterns represented by the evaluation run |
 
-<details>
-<summary><strong>View evaluation plots</strong></summary>
+### Validation gallery — ground truth vs. predictions
 
-**Precision–recall curve**
+<details open>
+<summary><strong>Validation batch 0 · labels and predictions</strong></summary>
 
-![Precision–recall curve](visual/PR_curve.png)
+| Ground-truth labels | Model predictions |
+|---|---|
+| <a href="visual/val_batch0_labels.jpg"><img src="visual/val_batch0_labels.jpg" alt="Validation batch 0 ground-truth labels" width="420"></a> | <a href="visual/val_batch0_pred.jpg"><img src="visual/val_batch0_pred.jpg" alt="Validation batch 0 model predictions" width="420"></a> |
 
-**F1 curve**
-
-![F1 curve](visual/F1_curve.png)
-
-**Precision curve**
-
-![Precision curve](visual/P_curve.png)
-
-**Recall curve**
-
-![Recall curve](visual/R_curve.png)
-
-**Confusion matrix**
-
-![Confusion matrix](visual/confusion_matrix.png)
+Select either image to open the full-size file.
 
 </details>
 
-### Dataset labels and qualitative predictions
+<details>
+<summary><strong>Validation batch 1 · labels and predictions</strong></summary>
 
-| Artifact | Description |
+| Ground-truth labels | Model predictions |
 |---|---|
-| [Label distribution / label diagnostics](visual/labels.jpg) | Overview of labels used in the training run |
-| [Training batch 0](visual/train_batch0.jpg) · [batch 1](visual/train_batch1.jpg) · [batch 2](visual/train_batch2.jpg) | Examples of training images and annotations |
-| [Validation labels — batch 0](visual/val_batch0_labels.jpg) · [batch 1](visual/val_batch1_labels.jpg) | Ground-truth examples from validation batches |
-| [Validation predictions — batch 0](visual/val_batch0_pred.jpg) · [batch 1](visual/val_batch1_pred.jpg) | Qualitative model predictions for validation examples |
+| <a href="visual/val_batch1_labels.jpg"><img src="visual/val_batch1_labels.jpg" alt="Validation batch 1 ground-truth labels" width="420"></a> | <a href="visual/val_batch1_pred.jpg"><img src="visual/val_batch1_pred.jpg" alt="Validation batch 1 model predictions" width="420"></a> |
 
-These images are stored in the `visual/` directory. They are diagnostic artifacts, not a substitute for reporting reproducible numerical metrics such as precision, recall, mAP@0.5, mAP@0.5:0.95, dataset size, split strategy, and evaluation settings. Only publish numerical values that can be verified from the training logs or the associated paper.
+Select either image to open the full-size file.
+
+</details>
+
+### Training samples
+
+<details>
+<summary><strong>View training batches and annotations</strong></summary>
+
+| Training batch 0 | Training batch 1 | Training batch 2 |
+|---|---|---|
+| <a href="visual/train_batch0.jpg"><img src="visual/train_batch0.jpg" alt="Training batch 0" width="280"></a> | <a href="visual/train_batch1.jpg"><img src="visual/train_batch1.jpg" alt="Training batch 1" width="280"></a> | <a href="visual/train_batch2.jpg"><img src="visual/train_batch2.jpg" alt="Training batch 2" width="280"></a> |
+
+These images help inspect sample imagery and annotation placement used by the training run.
+
+</details>
+
+### Evaluation curves
+
+<details>
+<summary><strong>Precision–recall, F1, precision, and recall</strong></summary>
+
+**Precision–recall curve**
+
+<a href="visual/PR_curve.png"><img src="visual/PR_curve.png" alt="Precision-recall curve" width="700"></a>
+
+**F1 versus confidence threshold**
+
+<a href="visual/F1_curve.png"><img src="visual/F1_curve.png" alt="F1 curve" width="700"></a>
+
+**Precision versus confidence threshold**
+
+<a href="visual/P_curve.png"><img src="visual/P_curve.png" alt="Precision curve" width="700"></a>
+
+**Recall versus confidence threshold**
+
+<a href="visual/R_curve.png"><img src="visual/R_curve.png" alt="Recall curve" width="700"></a>
+
+</details>
+
+<details>
+<summary><strong>Confusion matrix and label diagnostics</strong></summary>
+
+**Confusion matrix**
+
+<a href="visual/confusion_matrix.png"><img src="visual/confusion_matrix.png" alt="Model evaluation confusion matrix" width="700"></a>
+
+**Dataset label diagnostics**
+
+<a href="visual/labels.jpg"><img src="visual/labels.jpg" alt="Dataset label diagnostics" width="700"></a>
+
+</details>
+
+These plots should be interpreted together with the dataset composition, train/validation split, evaluation configuration, and research paper. Do not infer a headline accuracy value from a plot alone. For a reproducible quantitative report, record the dataset size and split strategy plus precision, recall, mAP@0.5, mAP@0.5:0.95, confidence threshold, and the evaluation command/version where available.
 
 ## Research and project documents
 
