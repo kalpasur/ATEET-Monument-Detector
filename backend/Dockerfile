@@ -15,13 +15,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # release instead of relying on a missing local "yolov5" directory.
 RUN git clone --depth 1 --branch v6.2 https://github.com/ultralytics/yolov5.git /opt/yolov5
 
+WORKDIR /app
+COPY backend/requirements.txt /tmp/requirements.txt
 RUN python -m pip install --upgrade pip \
     && python -m pip install torch==2.1.2 torchvision==0.16.2 --index-url https://download.pytorch.org/whl/cpu \
     && python -m pip install -r /tmp/requirements.txt
 
-WORKDIR /app
-COPY backend/requirements.txt /tmp/requirements.txt
-RUN python -m pip install -r /tmp/requirements.txt
 COPY backend/app.py /app/app.py
 
 EXPOSE 10000
