@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="ATEET — AI-assisted monument detection in aerial imagery using YOLOv5.">
+  <title>ATEET · Monument Detector</title>
+  <link rel="icon" href="./static/Ateet.png">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./config.js"></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="ATEET home">
+      <img src="./static/Ateet.png" alt="" class="brand-mark">
+      <span>ATEET<span class="brand-dot">.</span></span>
+    </a>
+    <div class="topbar-right">
+      <span class="live-indicator"><span></span> AI VISION SYSTEM</span>
+      <a class="github-link" href="https://github.com/kalpasur/ATEET-Monument-Detector" target="_blank" rel="noreferrer">View source ↗</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span class="eyebrow-line"></span> AERIAL IMAGE INTELLIGENCE</div>
+      <h1>Discover the past.<br><span>From above.</span></h1>
+      <p class="hero-copy">Identify monuments in aerial imagery with a custom-trained YOLOv5 model. Upload an image to run inference and inspect the predicted detections.</p>
+      <div class="hero-tags"><span>YOLOv5</span><span>Computer Vision</span><span>Explainable Results</span></div>
+    </section>
+
+    <section class="workspace" aria-label="Monument detection workspace">
+      <div class="panel upload-panel">
+        <div class="panel-heading">
+          <div>
+            <div class="step-label">01 / INPUT</div>
+            <h2>Upload imagery</h2>
+          </div>
+          <span class="icon-chip" aria-hidden="true">↑</span>
+        </div>
+        <p class="muted">Choose a JPG, PNG, or WEBP aerial image. For best results, use a clear image with visible monument structures.</p>
+        <label class="dropzone" id="dropzone" for="image-input">
+          <input id="image-input" type="file" accept="image/jpeg,image/png,image/webp">
+          <span class="upload-icon" aria-hidden="true">＋</span>
+          <strong>Drop an image here</strong>
+          <span class="dropzone-sub">or <span class="text-link">browse files</span></span>
+          <span class="file-hint">JPG · PNG · WEBP · up to 12 MB</span>
+        </label>
+        <div id="file-info" class="file-info hidden">
+          <span class="file-icon">IMG</span>
+          <div class="file-copy"><strong id="file-name">image.jpg</strong><span id="file-size">0 MB</span></div>
+          <button id="clear-file" class="icon-button" type="button" aria-label="Remove selected image">×</button>
+        </div>
+        <div class="field-row">
+          <label for="confidence">Confidence threshold <strong id="confidence-value">0.25</strong></label>
+          <input id="confidence" type="range" min="0.05" max="0.95" step="0.05" value="0.25">
+          <div class="range-ends"><span>More detections</span><span>Higher confidence</span></div>
+        </div>
+        <button id="run-button" class="primary-button" type="button" disabled>
+          <span id="run-button-label">Run monument detection</span><span aria-hidden="true">→</span>
+        </button>
+        <p class="privacy-note"><span aria-hidden="true">◈</span> Your image is sent to the configured inference server for processing.</p>
+      </div>
+
+      <div class="panel results-panel">
+        <div class="panel-heading">
+          <div>
+            <div class="step-label">02 / OUTPUT</div>
+            <h2>Detection results</h2>
+          </div>
+          <span id="result-status" class="status-pill">Awaiting image</span>
+        </div>
+        <div id="result-stage" class="result-stage">
+          <div class="empty-state">
+            <div class="scan-art" aria-hidden="true"><span class="scan-corner c1"></span><span class="scan-corner c2"></span><span class="scan-corner c3"></span><span class="scan-corner c4"></span><span class="scan-cross">＋</span><span class="scan-ring"></span></div>
+            <h3>Your results will appear here</h3>
+            <p>Upload an aerial image and run the model to see the annotated prediction.</p>
+          </div>
+        </div>
+        <div id="metrics" class="metrics hidden">
+          <div class="metric"><span>DETECTIONS</span><strong id="detection-count">0</strong></div>
+          <div class="metric"><span>TOP CONFIDENCE</span><strong id="top-confidence">—</strong></div>
+          <div class="metric"><span>INFERENCE</span><strong id="inference-time">—</strong></div>
+        </div>
+        <div id="detection-list-wrap" class="detection-list-wrap hidden">
+          <div class="list-heading"><h3>Detected objects</h3><span id="list-count">0 objects</span></div>
+          <div id="detection-list"></div>
+        </div>
+        <div id="error-message" class="error-message hidden" role="alert"></div>
+      </div>
+    </section>
+
+    <details class="settings panel">
+      <summary><span><span class="step-label">CONFIGURATION</span><strong>Inference server settings</strong></span><span class="settings-arrow">＋</span></summary>
+      <div class="settings-body">
+        <label for="api-url">Backend API base URL</label>
+        <div class="api-row"><input id="api-url" type="url" placeholder="https://your-service.onrender.com" autocomplete="url"><button id="save-api" class="secondary-button" type="button">Save endpoint</button></div>
+        <p class="muted small">The frontend is hosted on GitHub Pages; model inference runs on a separate Python server. Set the URL provided by your backend host. The URL is saved in this browser only. After deployment, you can set a default for all visitors in <code>site/config.js</code>.</p>
+        <p id="api-feedback" class="api-feedback" aria-live="polite"></p>
+      </div>
+    </details>
+
+    <section class="how-it-works">
+      <div class="step-label">THE PIPELINE</div>
+      <h2>From image to insight</h2>
+      <div class="pipeline">
+        <div class="pipeline-item"><span>01</span><strong>Upload</strong><p>Select an aerial image from your device.</p></div>
+        <div class="pipeline-connector" aria-hidden="true">→</div>
+        <div class="pipeline-item"><span>02</span><strong>Inference</strong><p>The YOLOv5 model predicts monument locations.</p></div>
+        <div class="pipeline-connector" aria-hidden="true">→</div>
+        <div class="pipeline-item"><span>03</span><strong>Review</strong><p>Inspect annotated imagery, confidence scores, and boxes.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer><span>ATEET · Monument Detector</span><span>Built for aerial image understanding</span><a href="https://github.com/kalpasur/ATEET-Monument-Detector" target="_blank" rel="noreferrer">Open-source project ↗</a></footer>
+</body>
+</html>
