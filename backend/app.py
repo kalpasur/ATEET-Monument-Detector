@@ -13,6 +13,13 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from PIL import Image, UnidentifiedImageError
 
+# Keep CPU thread pools small on memory-constrained hosts such as Render Free.
+torch.set_num_threads(int(os.getenv("TORCH_NUM_THREADS", "1")))
+try:
+    torch.set_num_interop_threads(1)
+except RuntimeError:
+    pass
+
 app = Flask(__name__)
 app.config["MAX_CONTENT_LENGTH"] = int(os.getenv("MAX_UPLOAD_MB", "12")) * 1024 * 1024
 
