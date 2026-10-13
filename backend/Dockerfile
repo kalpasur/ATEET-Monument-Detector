@@ -1,4 +1,3 @@
-```dockerfile
 FROM python:3.10-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -38,4 +37,3 @@ COPY backend/app.py /app/app.py
 EXPOSE 10000
 
 CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT:-10000} --workers 1 --threads 1 --timeout 300 app:app"]
-```
