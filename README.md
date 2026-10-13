@@ -1,6 +1,6 @@
-# ATEET — Monument Detection from Aerial Images
+# ATEET — Monuments Detection
 
-ATEET is a research-oriented computer-vision project for identifying monument structures in aerial imagery. It combines a static web interface with a Python inference API powered by a custom-trained YOLOv5 model.
+ATEET is a research-oriented computer-vision project for identifying monument structures in aerial and 2d imagery. It combines a static web interface with a Python inference API powered by a custom-trained YOLOv5 model.
 
 **Live demo:** [Open ATEET Monument Detector](https://kalpasur.github.io/ATEET-Monument-Detector/)  
 **Source code:** [GitHub repository](https://github.com/kalpasur/ATEET-Monument-Detector)  
