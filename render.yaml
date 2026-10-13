@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: ateet-monument-detector-api
+    runtime: docker
+    plan: standard
+    region: singapore
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    envVars:
+      - key: MODEL_URL
+        value: https://media.githubusercontent.com/media/kalpasur/ATEET-Monument-Detector/main/best.pt
+      - key: ALLOWED_ORIGINS
+        value: https://kalpasur.github.io
+      - key: MAX_UPLOAD_MB
+        value: "12"
