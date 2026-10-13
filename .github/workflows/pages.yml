@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "site/**"
+      - "static/Ateet.png"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
 
@@ -29,6 +30,11 @@ jobs:
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+
+      - name: Copy ATEET logo into the published site
+        run: |
+          mkdir -p site/static
+          cp static/Ateet.png site/static/Ateet.png
 
       - name: Upload static website
         uses: actions/upload-pages-artifact@v3
