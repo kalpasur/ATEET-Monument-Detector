@@ -84,24 +84,97 @@ GitHub Pages cannot run Python, Flask, or PyTorch. It serves the static frontend
 
 ```text
 ATEET-Monument-Detector/
-├── .github/
-│   └── workflows/
-│       └── pages.yml        # Deploys the site/ directory to GitHub Pages
-├── site/
-│   ├── index.html           # Web application UI
-│   ├── styles.css           # Styles
-│   ├── app.js               # Upload, API requests, and result rendering
-│   ├── config.js            # Optional default API URL
-│   └── static/              # Frontend assets
+├── .github/workflows/pages.yml   # GitHub Pages deployment workflow
 ├── backend/
-│   ├── app.py               # Flask inference API
-│   ├── requirements.txt     # Python dependencies
-│   └── Dockerfile           # Container build for the API
-├── best.pt                 # YOLOv5 checkpoint tracked with Git LFS
-├── render.yaml             # Render Blueprint configuration
-├── DEPLOYMENT.md           # Additional deployment instructions
+│   ├── app.py                    # Flask prediction API
+│   ├── Dockerfile                # Docker image definition
+│   └── requirements.txt          # Backend Python dependencies
+├── site/
+│   ├── index.html                # Browser UI
+│   ├── styles.css                # Frontend styling
+│   ├── app.js                    # Upload and prediction logic
+│   └── config.js                 # Optional shared API endpoint
+├── static/
+│   ├── Ateet.png                 # Project logo (copied into Pages build)
+│   ├── github.png                # GitHub icon asset
+│   └── style.css                 # Legacy stylesheet
+├── visual/                       # Training and evaluation plots
+├── thesis/                       # Paper, project presentation, workflow figure
+├── mon_model.ipynb               # Model development/training notebook
+├── prediction.ipynb              # Prediction notebook
+├── templates/index.html          # Original Flask template
+├── webapp.py                     # Original application entry point
+├── best.pt                       # YOLOv5 checkpoint / Git LFS pointer in Git
+├── render.yaml                   # Render Blueprint configuration
+├── DEPLOYMENT.md                 # Deployment guide
+├── LICENSE                       # Apache-2.0 license
 └── README.md
 ```
+
+## Model training and evaluation artifacts
+
+The repository includes visual diagnostics produced during model training and validation. These figures are useful for understanding the training run, but they should be interpreted together with the dataset split, evaluation command, model configuration, and the research paper.
+
+### Training curves and summary
+
+![YOLOv5 training results](visual/results.png)
+
+### Precision–recall and confidence curves
+
+| Evaluation plot | What it helps inspect |
+|---|---|
+| [Precision–recall curve](visual/PR_curve.png) | Precision/recall trade-off across confidence thresholds |
+| [F1 curve](visual/F1_curve.png) | F1-score behaviour as the confidence threshold changes |
+| [Precision curve](visual/P_curve.png) | Precision behaviour across confidence thresholds |
+| [Recall curve](visual/R_curve.png) | Recall behaviour across confidence thresholds |
+| [Confusion matrix](visual/confusion_matrix.png) | Class-level true/false prediction patterns represented by the evaluation run |
+
+<details>
+<summary><strong>View evaluation plots</strong></summary>
+
+**Precision–recall curve**
+
+![Precision–recall curve](visual/PR_curve.png)
+
+**F1 curve**
+
+![F1 curve](visual/F1_curve.png)
+
+**Precision curve**
+
+![Precision curve](visual/P_curve.png)
+
+**Recall curve**
+
+![Recall curve](visual/R_curve.png)
+
+**Confusion matrix**
+
+![Confusion matrix](visual/confusion_matrix.png)
+
+</details>
+
+### Dataset labels and qualitative predictions
+
+| Artifact | Description |
+|---|---|
+| [Label distribution / label diagnostics](visual/labels.jpg) | Overview of labels used in the training run |
+| [Training batch 0](visual/train_batch0.jpg) · [batch 1](visual/train_batch1.jpg) · [batch 2](visual/train_batch2.jpg) | Examples of training images and annotations |
+| [Validation labels — batch 0](visual/val_batch0_labels.jpg) · [batch 1](visual/val_batch1_labels.jpg) | Ground-truth examples from validation batches |
+| [Validation predictions — batch 0](visual/val_batch0_pred.jpg) · [batch 1](visual/val_batch1_pred.jpg) | Qualitative model predictions for validation examples |
+
+These images are stored in the `visual/` directory. They are diagnostic artifacts, not a substitute for reporting reproducible numerical metrics such as precision, recall, mAP@0.5, mAP@0.5:0.95, dataset size, split strategy, and evaluation settings. Only publish numerical values that can be verified from the training logs or the associated paper.
+
+## Research and project documents
+
+- **Research paper:** [Identification of Monuments from Aerial Images Using Deep Learning Techniques](https://www.researchgate.net/publication/372550896_IDENTIFICATION_OF_MONUMENTS_FROM_AERIAL_IMAGES_USING_DEEP_LEARNING_TECHNIQUES)
+- **PDF in repository:** [Open the paper/document PDF](thesis/123-129%2C%20Tesma0802%2CIJEAST.pdf)
+- **Project presentation:** [Minor project presentation](thesis/Minor_project.pptx)
+- **Model workflow figure:** [ATEET model workflow](thesis/ateet%20model%20workflow.png)
+- **Model development notebook:** [mon_model.ipynb](mon_model.ipynb)
+- **Prediction notebook:** [prediction.ipynb](prediction.ipynb)
+
+The notebooks and figures are provided for project transparency and further study. Review their contents and environment requirements before rerunning them.
 
 ## Technology stack
 
@@ -309,4 +382,4 @@ If you use this project or discuss the associated research, cite the publication
 
 ## License
 
-No license terms are stated here because a repository license has not been verified in this README update. Before reusing or redistributing the code, weights, or data, check the repository's `LICENSE` file (if present) and the terms of the model/data sources. Add an explicit project license if you are the rights holder and intend to grant reuse permissions.
+This repository includes an [Apache License 2.0](LICENSE). The license applies according to its terms; third-party libraries, research material, imagery, and model/data assets may have separate terms that must also be respected.
