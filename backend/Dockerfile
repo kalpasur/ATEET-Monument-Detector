@@ -7,6 +7,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     MKL_NUM_THREADS=1 \
     OPENBLAS_NUM_THREADS=1 \
     NUMEXPR_NUM_THREADS=1 \
+    YOLOV5_AUTOINSTALL=false \
     YOLOV5_REPO=/opt/yolov5 \
     MODEL_PATH=/opt/models/best.pt \
     PORT=10000
@@ -28,9 +29,7 @@ RUN python -m pip install --upgrade pip \
        --index-url https://download.pytorch.org/whl/cpu \
     && python -m pip install -r /tmp/requirements.txt
 
-# Prevent YOLOv5 Hub from attempting dependency installation at runtime.
-RUN sed -i '/check_requirements(ROOT \/ "requirements.txt"/d' \
-    /opt/yolov5/hubconf.py
+# YOLOV5_AUTOINSTALL=false prevents Hub from pip-installing optional packages at request time.
 
 COPY backend/app.py /app/app.py
 
